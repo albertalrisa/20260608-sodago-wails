@@ -1,18 +1,6 @@
-# alrisa-slides
+# Go-based Desktop App with Wails
 
-Personal presentation template built on [reveal.js](https://revealjs.com/), extended with Tailwind CSS, Shiki syntax highlighting, and Lit web components.
-
-## What is it?
-
-A customized starter for alrisa's presentations. It ships with:
-
-- Tailwind CSS v4 for utility-first slide styling
-- Shiki for beautiful code highlighting
-- Lit web components in `js/web-components/`
-- Multiple built-in themes (`css/theme/`)
-- Speaker notes support
-
-Edit `index.html` to write slides. Each `<section>` is one slide.
+Slide for SODA.go #0.2 session held on June 8, 2026.
 
 ## Dev
 
