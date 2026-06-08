@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<title>Go-based Desktop App with Wails</title>
+
+	<style>
+		@import url("dist/reset.css") layer(rreset);
+		@import url("dist/reveal.css") layer(reveal);
+		@import url("dist/theme/black.css") layer(rtheme);
+	</style>
+	<link rel="stylesheet" href="css/tailwind.css" />
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section class="w-full h-full font-title">
+				<div class="flex flex-col w-full h-full py-6">
+					<div class="h-full flex flex-col justify-center">
+						<div class="section-header w-full">
+							<div class="w-full text-center font-title">
+								<div class="text-2xl font-semibold">
+									Go-based Desktop App<br />
+									with <img src="/img/wails-logo.svg" alt="Wails" class="h-6 inline-flex">
+								</div>
+								<div class="text-xs mt-2 text-stone-400 fragment">
+									and <i class="italic">maybe</i> getting flagged by CrowdStrike in the process
+								</div>
+							</div>
+						</div>
+						<div class="mt-8 text-sm font-bold">@albertalrisa</div>
+					</div>
+					<div class="flex justify-between text-xs px-6 mt-4">
+						<div>SODA.go #0.2</div>
+						<div>Jun 8, 2026</div>
+					</div>
+				</div>
+			</section>
+			
+			<section>
+				<slide-layout>
+					<div slot="title">Our story begins with...</div>
+					<div slot="body">
+						<img class="fragment" src="/img/slack.png" alt="Screenshot of Slack conversation about malware being detected" />
+					</div>
+				</slide-layout>
+			</section>
+
+			<section>
+				<slide-layout>
+					<div slot="title">Good question, here's what it does</div>
+					<div slot="body" class="flex items-center justify-center h-full">
+						<div class="mt-3 flex flex-col items-center group cursor-pointer">
+							<div class="h-8 w-8 rounded-lg overflow-clip aspect-square select-none">
+								<img src="/img/en-ops.png" alt="SNKRDUNK EN Operations app logo"
+									class="w-full h-full max-w-full max-h-full">
+							</div>
+							<div class="text-[0.5rem] mt-1 px-1 bg-sky-700 rounded-sm select-none font-sans">
+								en-ops.dev.app
+							</div>
+						</div>
+					</div>
+				</slide-layout>
+			</section>
+
+			<section>
+				<style>
+					.fragment.gs.visible {
+						filter: grayscale(1.0);
+					}
+
+					.requirement {
+						border: 2px solid transparent;
+					}
+
+					.requirement.fragment.current-fragment {
+						background-color: var(--color-sky-600);
+						border: 2px solid var(--color-sky-800);
+					}
+
+					.item {
+						aspect-ratio: 1.0;
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						overflow: clip;
+						user-select: none;
+					}
+				</style>
+				<slide-layout>
+					<div slot="title">How did we end up with Wails</div>
+					<div slot="body" class="text-left">
+						<div class="grid gap-2" style="grid-template-columns: 7fr 3fr;">
+							<div>
+								<div class="font-title text-sm font-bold">
+									Requirements
+								</div>
+								<div class="p-2 flex flex-col gap-2">
+									<div class="requirement rounded-lg py-1 px-2 fragment" data-fragment-index="1">
+										User experience
+									</div>
+									<div class="requirement rounded-lg py-1 px-2 fragment" data-fragment-index="3">
+										Ease of development
+									</div>
+									<div class="requirement rounded-lg py-1 px-2 fragment" data-fragment-index="5">
+										Maintainability
+									</div>
+									<div class="requirement rounded-lg py-1 px-2 fragment" data-fragment-index="7">
+										(If possible) Code reuse
+									</div>
+									<div class="fragment" date-fragment-index="8"></div>
+								</div>
+							</div>
+							<div class="fragment" data-fragment-index="0">
+								<div class="grid grid-cols-3 gap-1" style="grid-auto-rows: min-content;">
+									<div class="item font-bold rounded-lg flex-col gap-0.5 text-xs from-stone-600 to-stone-800 bg-linear-to-b fragment custom gs"
+										data-fragment-index="2">
+										<img src="/img/logos/go.svg" alt="Go" class="h-3">
+										<span class="font-mono">CLI</span>
+									</div>
+									<div class="item">
+										<img src="/img/logos/swift.png" alt="Swift (Native macOS)"
+											class="fragment custom gs" data-fragment-index="4">
+									</div>
+									<div class="item">
+										<img src="/img/logos/electron.svg" alt="Electron">
+									</div>
+									<div class="item rounded-lg bg-gray-800 p-0.5">
+										<img src="/img/logos/wails.svg" alt="Wails">
+									</div>
+									<div class="item p-1 rounded-lg bg-linear-120 bg-stone-900 from-amber-400/20 to-teal-300/20 fragment custom gs"
+										data-fragment-index="4">
+										<img src="/img/logos/tauri.svg" alt="Tauri">
+									</div>
+									<div class="item p-1 rounded-lg bg-white fragment custom gs"
+										data-fragment-index="6">
+										<img src="/img/logos/flutter.svg" alt="Flutter" class="w-full h-full">
+									</div>
+								</div>
+								<div class="text-stone-400 text-[0.5rem] mt-2">
+									There are more Go-based UI frameworks but excluded due to it being:
+									<ul class="list-disc pl-3">
+										<li>unmaintained (e.g. go-astilectron),</li>
+										<li>requires extensive development effort to create custom components with
+											custom look and feel (e.g. Gio UI, using Raylib/SDL/Skia binding)</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</slide-layout>
+			</section>
+
+			<section>
+				<slide-layout>
+					<div slot="title">In comparison to Electron</div>
+					<div slot="body">
+						<style>
+							tr.fragment {
+								border-color: transparent;
+							}
+
+							tr,
+							tr.fragment.visible:not(:last-child) {
+								border-bottom: 2px solid var(--color-stone-700);
+							}
+
+							th,
+							td {
+								padding-inline: calc(var(--spacing) * 2);
+								padding-block: calc(var(--spacing) * 1);
+							}
+						</style>
+						<table class="text-sm w-full">
+							<thead class="font-title text-sm">
+								<th></th>
+								<th><img src="/img/logos/electron.svg" aria-hidden="true"
+										class="h-4 inline-flex mr-1">Electron</th>
+								<th><img src="/img/logos/wails.svg" aria-hidden="true"
+										class="h-4 inline-flex mr-1">Wails</th>
+							</thead>
+							<tbody>
+								<tr class="fragment">
+									<td class="text-stone-400 text-nowrap">Language</td>
+									<td>JS or TS</td>
+									<td>Go</td>
+								</tr>
+								<tr class="fragment">
+									<td class="text-stone-400 text-nowrap">Browser</td>
+									<td>Bundled Chromium</td>
+									<td>
+										OS-provided WebView<br>
+										<div class="text-xs pl-2">
+											<span class="font-mono text-sky-500">WKWebView</span> for macOS,<br>
+											<span class="font-mono text-sky-500">WebView2</span> for Windows,<br>
+											<span class="font-mono text-sky-500">WebKitGTK</span> for Linux
+										</div>
+									</td>
+								</tr>
+								<tr class="fragment">
+									<td class="text-stone-400 text-nowrap">Backend</td>
+									<td>Node.js</td>
+									<td>Go (compiled)</td>
+								</tr>
+								<tr class="fragment">
+									<td class="text-stone-400 text-nowrap">Bundle Size</td>
+									<td>min. 100MB</td>
+									<td>min. 20MB</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</slide-layout>
+			</section>
+
+			<section>
+				<style>
+					.step-item {
+						padding: var(--spacing);
+						border-radius: var(--radius-md);
+						background-color: var(--color-stone-800);
+						border: 1px solid var(--color-stone-700);
+						font-size: 0.6rem;
+						color: var(--color-stone-400);
+						position: relative;
+						z-index: 1;
+					}
+
+					.step-item.fragment.current-fragment {
+						color: var(--color-stone-200);
+					}
+
+					.step-item > .arrow {
+						--height: 28px;
+						--width: 68px;
+
+						position: absolute;
+						height: var(--height);
+						width: var(--width);
+						background: var(--color-stone-800);
+						border: 1px solid;
+						border-color: var(--color-stone-700);
+						border-left-color: transparent;
+						border-right-color: transparent;
+						top: calc(50% - var(--height) / 2);
+						left: calc(-1 * var(--width) + 0.5px);
+						z-index: 5;
+					}
+				</style>
+				<slide-layout>
+					<div slot="title">What's in a Wails Application</div>
+					<div slot="body">
+						<div class="grid grid-cols-2 gap-2">
+							<div
+								class="rounded-xl border border-stone-700 bg-stone-900 p-2 text-xs flex flex-col gap-2">
+								<div class="font-title text-[0.5rem] font-bold">Backend</div>
+								<div class="step-item fragment" data-fragment-index="1">
+									Structs, methods, DB access
+								</div>
+								<div class="step-item fragment" data-fragment-index="2">
+									OS API calls
+								</div>
+								<div class="step-item fragment" data-fragment-index="5">
+									Go Service
+								</div>
+							</div>
+							<div
+								class="rounded-xl border border-stone-700 bg-stone-900 p-2 text-xs flex flex-col gap-2">
+								<div class="font-title text-[0.5rem] font-bold">Frontend</div>
+								<div class="step-item fragment" data-fragment-index="3">
+									Your favorite front-end framework
+								</div>
+								<div class="step-item fragment" data-fragment-index="4">
+									Layout, styles, and interactions
+								</div>
+								<div class="step-item fragment" data-fragment-index="5">
+									Generated binding code (type-safe!)
+									<div class="arrow"></div>
+								</div>
+							</div>
+						</div>
+						<div class="text-xs text-stone-500 my-3 inline-flex gap-1 items-center fragment" data-fragment-index="6">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-3 text-stone-400">
+								<path fill="currentColor"
+									d="M305.4 21.8c-1.3-10.4-9.1-18.8-19.5-20-9.8-1.1-19.8-1.7-29.9-1.7-11.1 0-22.1 .7-32.8 2.1-10.3 1.3-18 9.7-19.3 20l-2.9 23.1c-.8 6.4-5.4 11.6-11.5 13.7-9.6 3.2-19 7.2-27.9 11.7-5.8 3-12.8 2.5-18-1.5l-18-14c-8.2-6.4-19.7-6.8-27.9-.4-16.6 13-31.5 28-44.4 44.7-6.3 8.2-5.9 19.6 .5 27.8l14.2 18.3c4 5.1 4.4 12 1.5 17.8-4.4 8.8-8.2 17.9-11.3 27.4-2 6.2-7.3 10.8-13.7 11.6l-22.8 2.9c-10.3 1.3-18.7 9.1-20 19.4-1.3 10.3-1.9 20.9-1.9 31.5 0 10.6 .6 21.1 1.9 31.4 1.3 10.3 9.7 18.1 20 19.4l22.8 2.9c6.4 .8 11.7 5.4 13.7 11.6 3.1 9.5 6.9 18.7 11.3 27.5 2.9 5.8 2.4 12.7-1.5 17.8L54 384.8c-6.4 8.2-6.8 19.6-.5 27.8 12.9 16.7 27.8 31.7 44.4 44.7 8.2 6.4 19.7 6 27.9-.4l18-14c5.1-4 12.2-4.4 18-1.5 9 4.6 18.3 8.5 27.9 11.7 6.1 2.1 10.7 7.3 11.5 13.7l2.9 23.1c1.3 10.3 9 18.7 19.3 20 10.7 1.4 21.7 2.1 32.8 2.1 10.1 0 20.1-.6 29.9-1.7 10.4-1.2 18.2-9.7 19.5-20l2.8-22.5c.8-6.5 5.5-11.8 11.7-13.8 10-3.2 19.7-7.2 29-11.8 5.8-2.9 12.7-2.4 17.8 1.5L385 457.9c8.2 6.4 19.6 6.8 27.8 .5 2.8-2.2 5.5-4.4 8.2-6.7L451.7 421c1.8-2.2 3.6-4.4 5.4-6.6 6.5-8.2 6-19.7-.4-27.9l-14-17.9c-4-5.1-4.4-12.2-1.5-18 4.8-9.4 9-19.3 12.3-29.5 2-6.2 7.3-10.8 13.7-11.6l22.8-2.8c10.3-1.3 18.8-9.1 20-19.4 .2-1.7 .4-3.5 .6-5.2l0-51.9c-.2-1.7-.4-3.5-.6-5.2-1.3-10.3-9.7-18.1-20-19.4l-22.8-2.8c-6.4-.8-11.7-5.4-13.7-11.6-3.4-10.2-7.5-20.1-12.3-29.5-3-5.8-2.5-12.8 1.5-18l14-17.9c6.4-8.2 6.8-19.7 .4-27.9-1.8-2.2-3.6-4.4-5.4-6.6L421 60.3c-2.7-2.3-5.4-4.5-8.2-6.7-8.2-6.4-19.6-5.9-27.8 .5L366.7 68.3c-5.1 4-12.1 4.4-17.8 1.5-9.3-4.6-19-8.6-29-11.8-6.2-2-10.9-7.3-11.7-13.7l-2.8-22.5zM256 176a80 80 0 1 1 0 160 80 80 0 1 1 0-160z" />
+							</svg>
+							Compiled into
+						</div>
+						<div class="grid gap-1.5" style="grid-template-columns: 4fr 1fr 2fr;">
+							<div class="relative w-full h-full">
+								<div
+									class="rounded-xl border border-sky-700 bg-sky-900 p-2 text-xs flex gap-4 items-center fragment h-16" data-fragment-index="8">
+									<div class="max-w-full">
+										<div class="font-bold text-sky-500 font-title text-[0.6rem] mb-1">Go Binary</div>
+										<div class="text-cyan-200">Compiled Go code</div>
+									</div>
+								</div>
+								<div class="rounded-xl border border-green-700 bg-green-900 py-1 px-3 text-xs fragment absolute top-0 right-0 my-1 mr-1 h-14" data-fragment-index="7">
+									<div class="font-mono text-green-500 text-[0.6rem] mb-1">//go:embed</div>
+									<div class="font-mono text-emerald-200 text-xs">frontend/dist</div>
+									<div class="text-[0.5rem] text-white/80">Accessible via <span
+											class="font-mono text-emerald-200">embed.FS</span></div>
+								</div>
+							</div>
+							<div class="flex flex-col justify-center fragment items-center" data-fragment-index="10">
+								<div class="text-[0.5rem] text-stone-400">in-memory IPC</div>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+									class="h-4 text-stone-400">
+									<path fill="currentColor"
+										d="M470.6 374.6l96-96c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l41.4 41.4-357.5 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6l96 96c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-41.4-41.4 357.5 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" />
+								</svg>
+							</div>
+							<div
+								class="rounded-xl border border-amber-700 bg-amber-900 py-1 px-3 text-xs flex flex-col gap-1 items-center justify-center fragment"  data-fragment-index="9">
+								<div class="font-bold font-title text-amber-400 text-[0.6rem]">OS WebView</div>
+								<div class="flex flex-col text-orange-200">
+									<div>HTML/CSS/JS</div>
+									<div>Binding code</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</slide-layout>
+			</section>
+
+			<section>
+				<slide-layout>
+					<div slot="title">Go ↔ TypeScript Bindings</div>
+					<div slot="body">
+						<div class="grid grid-cols-2 gap-1">
+							<div>
+								<div class="text-left text-[0.6rem] mb-1 font-title text-stone-400">
+									Service code (Go)
+								</div>
+								<div class="p-1 rounded-md bg-[#121212] fragment" data-fragment-index="1">
+									<code class="shiki text-[0.5rem]" data-lang="go">
+										type Demo struct{}
+
+										type Input struct {
+											To      string
+											Message string
+										}
+
+										type Output struct {
+											OK     bool   `json:"ok"`
+											Status string `json:"status"`
+										}
+
+										func (s *Demo) SendRequest(in Input) (Output, error) {
+											return Output{
+												OK:     true,
+												Status: "pending",
+											}, nil
+										}
+									</code>
+								</div>
+								<div class="mt-1 text-[0.5rem] p-1 rounded border bg-stone-900 border-stone-700 fragment" data-fragment-index="4">
+									If a service method returns <code data-lang="go" class="text-[0.5rem]">(<span class="text-amber-400">value</span>, <span class="text-red-400">error</span>)</code>, returning an <code class="text-red-400 text-[0.5rem]">error</code> will result in a <code class="text-sky-400 text-[0.5rem]">Promise</code> rejection in JS/TS.
+								</div>
+							</div>
+							<div>
+								<div class="text-left text-[0.6rem] mb-1 font-title text-stone-400">
+									Generated bindings (TS)
+								</div>
+								<div class="p-1 rounded-md bg-[#121212] fragment" data-fragment-index="2">
+									<code class="shiki text-[0.5rem]" data-lang="ts">
+										export function SendRequest($in: $models.Input): $CancellablePromise<$models.Output> {
+											return $Call.ByID(602180076, $in).then(($result: any) => {
+												return $$createType0($result);
+											});
+										}
+									</code>
+								</div>
+								<div class="p-1 rounded-md bg-[#121212] mt-1 fragment" data-fragment-index="3">
+									<code class="shiki text-[0.5rem]" data-lang="ts">
+										export class Input {
+											"To": string;
+											"Message": string;
+
+											/** omitted **/
+										}
+
+										export class Output {
+											"ok": boolean;
+											"status": string;
+
+											/** omitted **/
+										}
+									</code>
+								</div>
+							</div>
+						</div>
+					</div>
+				</slide-layout>
+			</section>
+
+			<!-- IPC: Overview -->
+			<!--
+			<section>
+				<slide-layout>
+					<div slot="title">IPC — Custom URL scheme, not shared memory</div>
+					<div slot="body" class="flex flex-col gap-2 h-full justify-center text-xs">
+						<div class="text-[0.55rem] text-stone-500 uppercase tracking-wider">JS → Go (method call)</div>
+						<div class="flex items-center gap-1 text-[0.6rem]">
+							<div class="rounded-lg bg-amber-950/60 border border-amber-700 p-2 flex-1">
+								<div class="font-mono text-amber-300 text-[0.55rem]">fetch("wails://wails/runtime", {
+									body: JSON.stringify({
+									object: 0, method: 0, args: …
+									})
+									})</div>
+							</div>
+							<div class="text-stone-500 shrink-0 text-[0.5rem]">→</div>
+							<div class="rounded-lg bg-stone-800 border border-stone-600 p-2 flex-1 flex flex-col gap-1">
+								<div class="font-bold text-stone-300 text-[0.55rem]">WebView intercepts</div>
+								<div class="text-stone-500 text-[0.5rem]">macOS: WKURLSchemeHandler</div>
+								<div class="text-stone-500 text-[0.5rem]">Windows: WebResourceRequested</div>
+								<div class="text-stone-500 text-[0.5rem]">Linux: custom URI scheme</div>
+							</div>
+							<div class="text-stone-500 shrink-0 text-[0.5rem]">→</div>
+							<div class="rounded-lg bg-sky-950/60 border border-sky-700 p-2 flex-1">
+								<div class="font-bold text-sky-300 text-[0.55rem] mb-1">Go (CGO bridge)</div>
+								<div class="font-mono text-[0.5rem] text-stone-300">processURLRequest()</div>
+								<div class="font-mono text-[0.5rem] text-stone-300">MessageProcessor</div>
+								<div class="font-mono text-[0.5rem] text-stone-300">boundMethod.Call()</div>
+							</div>
+						</div>
+						<div class="text-[0.55rem] text-stone-500 uppercase tracking-wider mt-1">Go → JS (events / push)
+						</div>
+						<div class="flex items-center gap-1 text-[0.6rem]">
+							<div class="rounded-lg bg-sky-950/60 border border-sky-700 p-2 flex-1">
+								<div class="font-mono text-sky-300 text-[0.55rem]">app.EmitEvent("myevent", data)</div>
+							</div>
+							<div class="text-stone-500 shrink-0 text-[0.5rem]">→</div>
+							<div class="rounded-lg bg-stone-800 border border-stone-600 p-2 flex-1">
+								<div class="font-bold text-stone-300 text-[0.55rem]">evaluateJavaScript()</div>
+								<div class="text-stone-500 text-[0.5rem]">Injects JS string directly</div>
+								<div class="text-stone-500 text-[0.5rem]">into the WebView</div>
+							</div>
+							<div class="text-stone-500 shrink-0 text-[0.5rem]">→</div>
+							<div class="rounded-lg bg-amber-950/60 border border-amber-700 p-2 flex-1">
+								<div class="font-mono text-amber-300 text-[0.55rem]">wails.Events.On("myevent", fn)
+								</div>
+								<div class="text-stone-500 text-[0.5rem] mt-0.5">handler fires</div>
+							</div>
+						</div>
+						<div class="rounded-lg bg-stone-800 px-3 py-2 text-[0.55rem] text-stone-400 mt-1">
+							<span class="text-stone-200 font-bold">No network socket.</span>
+							The <span class="font-mono text-amber-300">wails://</span> scheme is intercepted inside the
+							process — the OS routes it to the registered handler via CGO, never touching the network
+							stack.
+							"In-memory" means the data stays in-process, not OS shared memory (<span
+								class="font-mono">mmap</span>/<span class="font-mono">shm_open</span>).
+						</div>
+					</div>
+				</slide-layout>
+			</section>
+		-->
+
+			<!-- IPC: How the bridge actually works -->
+			<!--
+			<section>
+				<slide-layout>
+					<div slot="title">IPC — How the call actually travels</div>
+					<div slot="body" class="flex flex-col gap-1.5 h-full justify-center text-xs">
+
+						<div class="flex items-start gap-2">
+							<div
+								class="shrink-0 w-4 h-4 rounded-full bg-stone-700 text-[0.5rem] flex items-center justify-center text-stone-300 mt-0.5">
+								1</div>
+							<div class="flex-1">
+								<div class="text-[0.5rem] text-stone-500 font-mono mb-0.5">webview_window_darwin.go:87
+								</div>
+								<code class="shiki text-[0.55rem]" data-lang="objc">// At window creation — register "wails://" with WKWebView
+[config setURLSchemeHandler:delegate forURLScheme:@"wails"];</code>
+							</div>
+						</div>
+
+						<div class="flex items-start gap-2">
+							<div
+								class="shrink-0 w-4 h-4 rounded-full bg-amber-800 text-[0.5rem] flex items-center justify-center text-stone-300 mt-0.5">
+								2</div>
+							<div class="flex-1">
+								<div class="text-[0.5rem] text-stone-500 font-mono mb-0.5">runtime.js (injected by
+									Wails)</div>
+								<code class="shiki text-[0.55rem]" data-lang="javascript">// Generated binding calls this under the hood
+fetch("wails://wails/runtime", { method: "POST",
+  body: JSON.stringify({ object: 0, method: 0, args: {…} }) })</code>
+							</div>
+						</div>
+
+						<div class="flex items-start gap-2">
+							<div
+								class="shrink-0 w-4 h-4 rounded-full bg-stone-700 text-[0.5rem] flex items-center justify-center text-stone-300 mt-0.5">
+								3</div>
+							<div class="flex-1">
+								<div class="text-[0.5rem] text-stone-500 font-mono mb-0.5">webview_window_darwin.m:372 —
+									WKURLSchemeHandler delegate</div>
+								<code class="shiki text-[0.55rem]" data-lang="objc">- (void)webView:(WKWebView*)webView startURLSchemeTask:(id&lt;WKURLSchemeTask&gt;)task {
+    processURLRequest(self.windowId, task); // call CGO-exported Go func
+}</code>
+							</div>
+						</div>
+
+						<div class="flex items-start gap-2">
+							<div
+								class="shrink-0 w-4 h-4 rounded-full bg-sky-800 text-[0.5rem] flex items-center justify-center text-stone-300 mt-0.5">
+								4</div>
+							<div class="flex-1">
+								<div class="text-[0.5rem] text-stone-500 font-mono mb-0.5">application_darwin.go:412
+								</div>
+								<code class="shiki text-[0.55rem]" data-lang="go">//export processURLRequest
+func processURLRequest(windowID C.uint, task unsafe.Pointer) {
+    window, _ := globalApplication.Window.GetByID(uint(windowID))
+    webviewRequests &lt;- &webViewAssetRequest{ // push onto Go channel
+        Request: webview.NewRequest(task), windowName: window.Name(),
+    }
+}</code>
+							</div>
+						</div>
+
+						<div class="flex items-start gap-2">
+							<div
+								class="shrink-0 w-4 h-4 rounded-full bg-sky-800 text-[0.5rem] flex items-center justify-center text-stone-300 mt-0.5">
+								5</div>
+							<div class="flex-1">
+								<div class="text-[0.5rem] text-stone-500 font-mono mb-0.5">transport_http.go →
+									messageprocessor_call.go</div>
+								<code class="shiki text-[0.55rem]" data-lang="go">// Channel consumer reads request, HTTP transport parses JSON body,
+// then dispatches to the bound Go method:
+result, err = boundMethod.Call(ctx, options.Args)</code>
+							</div>
+						</div>
+
+					</div>
+				</slide-layout>
+			</section>
+		-->
+			<section>
+				<style>
+					.summary-item {
+						padding: var(--spacing);
+						border-radius: var(--radius-md);
+						background-color: var(--color-stone-800);
+						border: 2px solid var(--color-stone-700);
+						color: var(--color-stone-400);
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+					}
+
+					.summary-item.crowdstrike {
+						background-color: var(--color-yellow-900);
+						border-color: var(--color-yellow-700);
+						color: var(--color-yellow-500)
+					}
+
+					.summary-item.fragment.current-fragment {
+						color: var(--color-stone-200);
+					}
+				</style>
+				<slide-layout>
+					<div slot="title">Summary</div>
+					<div slot="body" class="h-full">
+						<div class="grid grid-cols-3 h-full w-full gap-2 items-stretch auto-rows-fr">
+							<div class="summary-item fragment">Powered by <img class="h-3 inline-flex mt-1" src="/img/logos/go.svg" alt="Go"></div>
+							<div class="summary-item fragment">Use your favorite frontend framework</div>
+							<div class="summary-item fragment">
+								CSS styling<br>
+								<span class="text-sm">(Tailwind support too)</span>
+							</div>
+							<div class="summary-item fragment">Automatic binding generation</div>
+							<div class="summary-item fragment">Type-safe Go and TypeScript</div>
+							<div class="summary-item fragment">
+								Two-way IPC<br>
+								<span class="text-sm">with stream support</span>
+							</div>
+							<div class="summary-item fragment">Cross-platform</div>
+							<div class="summary-item fragment">Auto-update support</div>
+							<div class="fragment relative">
+								<div class="absolute summary-item -rotate-12 -top-4 -left-2 crowdstrike">
+									Might land you a message from CIT<br>
+									<span class="text-xs">due to <img class="h-3 inline-flex mt-1" src="/img/crowdstrike.svg" alt="CrowdStrike"> alert</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</slide-layout>
+			</section>
+
+			<section>
+				<slide-layout>
+					<div slot="body" class="flex flex-col justify-center items-start h-full w-full">
+						<div class="text-lg font-title font-bold">Thank you!</div>
+					</div>
+				</slide-layout>
+			</section>
+		</div>
+	</div>
+
+	<script type="module" src="js/web-components/components.js"></script>
+	<script src="dist/reveal.js"></script>
+	<script src="dist/plugin/notes.js"></script>
+	<script src="dist/plugin/markdown.js"></script>
+	<script src="dist/plugin/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+		});
+	</script>
+</body>
+
+</html>
