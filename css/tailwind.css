@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@source "../js/**/*.js";
+@source "../index.html";
+
+@theme {
+  --font-title: 'LINE Seed JP', sans-serif;
+}
+
+:root {
+  /* reveal.js uses 42px as default font-size */
+  font-size: 42px;  
+}
+
+html.print-pdf .reveal [hidden] {
+  display: block !important;
+}
+
+@layer base {
+  .print-pdf [hidden]:where(:not([hidden="until-found"])) {
+    display: block !important;
+  }
+}
+
+.reveal .slides section {
+  width: 100%;
+  height: 100%;
+  padding-block: calc(var(--spacing) * 2);
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+.reveal img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.shiki {
+  width: 100%;
+}
