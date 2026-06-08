@@ -2,6 +2,8 @@
 
 Slide for SODA.go #0.2 session held on June 8, 2026.
 
+PDF version can be accessed [here](https://github.com/albertalrisa/20260608-sodago-wails/blob/main/pdf/Go-based%20Desktop%20App%20with%20Wails.pdf)
+
 ## Dev
 
 ```bash

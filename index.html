@@ -595,7 +595,14 @@ result, err = boundMethod.Call(ctx, options.Args)</code>
 			<section>
 				<slide-layout>
 					<div slot="body" class="flex flex-col justify-center items-start h-full w-full">
-						<div class="text-lg font-title font-bold">Thank you!</div>
+						<div class="text-lg font-title font-bold mb-2">Thank you!</div>
+						<div class="flex gap-4">
+							<img src="/img/slide_qr.svg" alt="QR Code to the slide">
+							<div class="text-left text-sm mt-4">
+								This slide PDF (and its source code) can be found at
+								<a href="https://github.com/albertalrisa/20260608-sodago-wails" class="text-xs underline text-sky-500">https://github.com/albertalrisa/20260608-sodago-wails</a>
+							</div>
+						</div>
 					</div>
 				</slide-layout>
 			</section>
@@ -617,6 +624,7 @@ result, err = boundMethod.Call(ctx, options.Args)</code>
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
 		});
+		Reveal.configure({ pdfSeparateFragments: false });
 	</script>
 </body>
 
